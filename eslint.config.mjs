@@ -7,7 +7,7 @@ const eslintConfig = defineConfig([
   ...nextTs,
   {
     rules: {
-      "no-unused-vars": "off",
+      "no-unused-vars": false,
     },
   },
   // Override default ignores of eslint-config-next.
