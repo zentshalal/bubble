@@ -11,7 +11,7 @@ export default function FloatingBubbles() {
       size: `${Math.random() * 50 + 15}px`,
       floatDuration: `${Math.random() * 12 + 8}s`,
       swayDuration: `${Math.random() * 4 + 2}s`,
-      delay: `${Math.random() * 8}s`,
+      delay: `${Math.random() * 3}s`,
     }));
     setBubbleStyles(generatedStyles);
   }, []);
@@ -21,7 +21,7 @@ export default function FloatingBubbles() {
       {bubbleStyles.map((style, i) => (
         <div
           key={i}
-          className="absolute bottom-[-100px] rounded-full bg-brand-primary/15 blur-[1px] animate-bubble"
+          className="absolute bottom-[-50px] rounded-full bg-brand-primary/15 blur-[1px] animate-bubble"
           style={{
             left: style.left,
             width: style.size,
