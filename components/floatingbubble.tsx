@@ -6,7 +6,7 @@ export default function FloatingBubbles() {
   const [bubbleStyles, setBubbleStyles] = useState<any[]>([]);
 
   useEffect(() => {
-    const generatedStyles = Array.from({ length: 15 }).map(() => ({
+    const generatedStyles = Array.from({ length: 20 }).map(() => ({
       left: `${Math.random() * 100}%`,
       size: `${Math.random() * 50 + 15}px`,
       floatDuration: `${Math.random() * 12 + 8}s`,
@@ -21,7 +21,7 @@ export default function FloatingBubbles() {
       {bubbleStyles.map((style, i) => (
         <div
           key={i}
-          className="absolute bottom-[-50px] rounded-full bg-brand-primary/15 blur-[1px] animate-bubble"
+          className="absolute bottom-[-70px] rounded-full bg-brand-primary/15 blur-[1px] animate-bubble"
           style={{
             left: style.left,
             width: style.size,
