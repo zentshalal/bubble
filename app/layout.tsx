@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Share your memories, chat and organize your life together on Bubble, the app designed exclusively for couples.",
   verification: {
-    google: "google90f93a02117de728.html",
+    google: "SksSnFZN7R70SoNCA-qgAmI5--639Z5PYOQiqf_Jf0E",
   },
 };
 
