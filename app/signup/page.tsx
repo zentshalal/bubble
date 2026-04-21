@@ -33,7 +33,7 @@ export default function SignUp() {
                 "It feels like our own little secret garden. No ads, no
                 followers, just us and our history."
               </p>
-              <p className="italic">- Alex & Sam</p>
+              <p className="italic">— Alex & Sam</p>
             </div>
           </div>
         </aside>
