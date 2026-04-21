@@ -50,8 +50,8 @@ export default function SignUp() {
           </aside>
           <section className="flex flex-col w-full h-full space-y-8 p-10 lg:h-full lg:w-1/2 lg:space-y-10 lg:rounded-r-[3rem] lg:p-18">
             <div className="flex flex-col gap-5 sm:flex-row sm:justify-between">
-              <div className="font-bold tracking-tight text-4xl flex flex-wrap gap-x-2 lg:block">
-                <h3 className="text-[#333] ">Sign up to</h3>
+              <div className="font-bold tracking-tight text-4xl lg:text-3xl flex flex-wrap gap-x-2 lg:block">
+                <h3 className="text-[#333] text-4xl">Sign up to</h3>
                 <span className="text-linear text-brand-primary font-extrabold">
                   Bubble
                 </span>

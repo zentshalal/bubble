@@ -188,6 +188,7 @@ export default function SignUpForm() {
             type="button"
             className="absolute text-brand-primary top-3 right-3 rounded-full bg-neutral-100 hover:bg-neutral-200 p-2 transition-colors"
             onClick={() => setIsPasswordVisible((prev) => !prev)}
+            aria-label="Show/Hide password"
           >
             {isPasswordVisible ? <Eye size={20} /> : <EyeOff size={20} />}
           </button>
@@ -224,6 +225,7 @@ export default function SignUpForm() {
             type="button"
             className="absolute text-brand-primary top-3 right-3 rounded-full bg-neutral-100 hover:bg-neutral-200 p-2 transition-colors"
             onClick={() => setIsConfirmVisible((prev) => !prev)}
+            aria-label="Show/Hide password"
           >
             {isConfirmVisible ? <Eye size={20} /> : <EyeOff size={20} />}
           </button>
@@ -240,7 +242,7 @@ export default function SignUpForm() {
         <p>
           Already have an account ?{" "}
           <Link href="/login" className="text-brand-primary font-medium">
-            Click here
+            Log in
           </Link>
         </p>
       </div>

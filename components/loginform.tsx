@@ -45,6 +45,7 @@ export default function LogInForm() {
             type="button"
             className="absolute text-brand-primary top-3 right-3 rounded-full bg-neutral-100 hover:bg-neutral-200 p-2 transition-colors"
             onClick={() => setIsPasswordVisible((prev) => !prev)}
+            aria-label="Show/Hide password"
           >
             {isPasswordVisible ? <Eye size={20} /> : <EyeOff size={20} />}
           </button>
@@ -61,7 +62,7 @@ export default function LogInForm() {
         <p>
           New to Bubble?{" "}
           <Link href="/signup" className="text-brand-primary font-medium">
-            Click here
+            Create an account
           </Link>
         </p>
       </div>
