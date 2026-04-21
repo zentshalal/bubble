@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Bubble",
   description:
     "Share your memories, chat and organize your life together on Bubble, the app designed exclusively for couples.",
+  verification: {
+    google: "google90f93a02117de728.html",
+  },
 };
 
 const inter = Inter({
