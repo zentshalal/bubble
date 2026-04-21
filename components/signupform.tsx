@@ -116,7 +116,7 @@ export default function SignUpForm() {
       <div className="relative flex flex-col gap-y-2">
         <Label className="text-[#333] font-semibold text-sm">Username</Label>
         {errors.username && (
-          <p className="absolute top-1 right-2 truncate text-xs text-red-500">
+          <p className="lg:absolute lg:top-1 lg:right-2 lg:truncate text-xs text-red-500">
             {touchedFields.username && errors.username?.message
               ? String(errors.username.message)
               : "\u00A0"}
@@ -128,7 +128,7 @@ export default function SignUpForm() {
             id="username"
             placeholder=" "
             aria-invalid={!!errors.username}
-            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-sm text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
+            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
           />
           <label
             htmlFor="username"
@@ -142,7 +142,7 @@ export default function SignUpForm() {
       <div className="relative flex flex-col gap-y-2">
         <Label className="text-[#333] font-semibold text-sm">Email</Label>
         {errors.email && (
-          <p className="absolute top-1 right-2 truncate text-xs text-red-500">
+          <p className="lg:absolute lg:top-1 lg:right-2 lg:truncate text-xs text-red-500">
             {touchedFields.email && errors.email?.message
               ? String(errors.email.message)
               : "\u00A0"}
@@ -155,7 +155,7 @@ export default function SignUpForm() {
             type="email"
             placeholder=" "
             aria-invalid={!!errors.email}
-            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-sm text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
+            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
           />
           <label
             htmlFor="email"
@@ -169,7 +169,7 @@ export default function SignUpForm() {
       <div className="relative flex flex-col gap-y-2">
         <Label className="text-[#333] font-semibold text-sm">Password</Label>
         {errors.password && (
-          <p className="absolute top-1 right-2 truncate text-xs text-red-500">
+          <p className="lg:absolute lg:top-1 lg:right-2 lg:truncate text-xs text-red-500">
             {touchedFields.password && errors.password?.message
               ? String(errors.password.message)
               : "\u00A0"}
@@ -182,7 +182,7 @@ export default function SignUpForm() {
             type={isPasswordVisible ? "text" : "password"}
             placeholder=" "
             aria-invalid={!!errors.password}
-            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-sm text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
+            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
           />
           <button
             type="button"
@@ -205,7 +205,7 @@ export default function SignUpForm() {
           Confirm Password
         </Label>
         {errors.confirmPassword && (
-          <p className="absolute top-1 right-2 truncate text-xs text-red-500">
+          <p className="lg:absolute lg:top-1 lg:right-2 lg:truncate text-xs text-red-500">
             {touchedFields.confirmPassword && errors.confirmPassword?.message
               ? String(errors.confirmPassword.message)
               : "\u00A0"}
@@ -218,7 +218,7 @@ export default function SignUpForm() {
             type={isConfirmVisible ? "text" : "password"}
             placeholder=" "
             aria-invalid={!!errors.confirmPassword}
-            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-sm text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
+            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
           />
           <button
             type="button"

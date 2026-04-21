@@ -21,7 +21,7 @@ export default function LogInForm() {
             id="email"
             type="email"
             placeholder=" "
-            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-sm text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
+            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
           />
           <label
             htmlFor="email"
@@ -39,7 +39,7 @@ export default function LogInForm() {
             id="password"
             type={isPasswordVisible ? "text" : "password"}
             placeholder=" "
-            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-sm text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
+            className="peer h-14 rounded-xl border border-neutral-400 bg-transparent px-3 pb-2 pt-5 text-[#333] focus:border-brand-primary focus:bg-brand-secondary/5"
           />
           <button
             type="button"
