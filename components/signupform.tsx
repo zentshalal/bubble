@@ -47,8 +47,8 @@ export default function SignUpForm() {
     },
   });
 
-  function onSubmit(data: SignUpFormData) {
-    authService.signUpSubmit(data, reset, router);
+  async function onSubmit(data: SignUpFormData) {
+    await authService.signUpSubmit(data, reset, router);
   }
 
   function onGoogleSubmit() {

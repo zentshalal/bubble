@@ -49,8 +49,8 @@ export default function LogInForm() {
     },
   });
 
-  function onSubmit(data: LogInFormData) {
-    authService.logInSubmit(data, router);
+  async function onSubmit(data: LogInFormData) {
+    await authService.logInSubmit(data, router);
   }
 
   function onGoogleSubmit() {
