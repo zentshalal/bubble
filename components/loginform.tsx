@@ -13,14 +13,13 @@ import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 
-import { createClient } from "@/lib/supabase/client";
 import { logInSchema } from "@/lib/validation/auth";
 
 import { z } from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { toast } from "sonner";
+import { authService } from "@/lib/services/auth";
 
 type LogInFormData = z.infer<typeof logInSchema>;
 
@@ -50,51 +49,12 @@ export default function LogInForm() {
     },
   });
 
-  async function onSubmit(data: LogInFormData) {
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword(data);
-
-    if (error) {
-      toast.error("Log in failed", {
-        position: "top-center",
-        description: error.message,
-        className: toastErrorClassName,
-        descriptionClassName: "text-[#333]",
-      });
-      return;
-    }
-
-    toast.success("Log in Successful", {
-      position: "top-center",
-      description: "You are soon going to be redirected to the home page.",
-      className: toastSuccessClassName,
-      descriptionClassName: "!text-[#333]",
-    });
-
-    router.refresh();
+  function onSubmit(data: LogInFormData) {
+    authService.logInSubmit(data, router);
   }
 
-  async function onGoogleLogIn() {
-    setIsGoogleSubmitting(true);
-
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      toast.error("Google log in failed", {
-        position: "top-center",
-        description: error.message,
-        className: toastErrorClassName,
-        descriptionClassName: "text-[#333]",
-      });
-      setIsGoogleSubmitting(false);
-    }
+  function onGoogleSubmit() {
+    authService.onGoogleLogIn(setIsGoogleSubmitting);
   }
 
   return (
@@ -190,7 +150,7 @@ export default function LogInForm() {
       <Button
         type="button"
         disabled={isGoogleSubmitting}
-        onClick={onGoogleLogIn}
+        onClick={onGoogleSubmit}
         className="border border-brand-primary text-brand-primary bg-transparent w-full p-5 rounded-full cursor-pointer mx-auto shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
       >
         <svg

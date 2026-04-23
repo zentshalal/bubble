@@ -3,7 +3,6 @@
 import { Eye, EyeOff } from "lucide-react";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 
@@ -17,18 +16,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { createClient } from "@/lib/supabase/client";
 import { signUpSchema } from "@/lib/validation/auth";
 
-import { toast } from "sonner";
+import { authService } from "@/lib/services/auth";
+
+import { useRouter } from "next/navigation";
 
 type SignUpFormData = z.infer<typeof signUpSchema>;
-
-const toastBaseClassName =
-  "!border-l-4 !rounded-xl !border !border-neutral-200 !bg-white !text-[#333] !font-semibold !shadow-xl";
-
-const toastErrorClassName = `${toastBaseClassName} !border-l-red-500`;
-const toastSuccessClassName = `${toastBaseClassName} !border-l-brand-primary`;
 
 export default function SignUpForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -53,61 +47,12 @@ export default function SignUpForm() {
     },
   });
 
-  async function onSubmit(data: SignUpFormData) {
-    const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-      options: {
-        data: {
-          username: data.username,
-          avatar_url: "https://canva.link/kbf7ci7xns6z0jr",
-        },
-        emailRedirectTo: `${window.location.origin}/`,
-      },
-    });
-
-    if (error) {
-      toast.error("Sign up failed", {
-        position: "top-center",
-        description: error.message,
-        className: toastErrorClassName,
-        descriptionClassName: "text-[#333]",
-      });
-      return;
-    }
-
-    toast.success("Account created", {
-      position: "top-center",
-      description: "Check your inbox to confirm your email before login.",
-      className: toastSuccessClassName,
-      descriptionClassName: "!text-[#333]",
-    });
-    reset();
-    router.refresh();
+  function onSubmit(data: SignUpFormData) {
+    authService.signUpSubmit(data, reset, router);
   }
 
-  async function onGoogleSignUp() {
-    setIsGoogleSubmitting(true);
-
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      toast.error("Google sign up failed", {
-        position: "top-center",
-        description: error.message,
-        className: toastErrorClassName,
-        descriptionClassName: "text-[#333]",
-      });
-      setIsGoogleSubmitting(false);
-    }
+  function onGoogleSubmit() {
+    authService.onGoogleSignUp(setIsGoogleSubmitting);
   }
 
   return (
@@ -265,7 +210,7 @@ export default function SignUpForm() {
 
       <Button
         type="button"
-        onClick={onGoogleSignUp}
+        onClick={onGoogleSubmit}
         disabled={isGoogleSubmitting}
         className="border border-brand-primary text-brand-primary bg-transparent w-full p-5 rounded-full cursor-pointer mx-auto shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
       >
