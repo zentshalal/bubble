@@ -90,6 +90,7 @@ export default function SignUpForm() {
     setIsGoogleSubmitting(true);
 
     const supabase = createClient();
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {

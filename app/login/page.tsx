@@ -1,7 +1,6 @@
 import { Star } from "lucide-react";
 
 import FloatingBubbles from "@/components/floatingbubble";
-
 import LogInForm from "@/components/loginform";
 
 import * as motion from "motion/react-client";

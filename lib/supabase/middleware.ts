@@ -36,7 +36,12 @@ export async function updateSession(request: NextRequest) {
 
   const url = request.nextUrl.clone();
 
-  if (!user && url.pathname !== "/signup" && url.pathname !== "/login") {
+  const isPublicAuthRoute =
+    url.pathname === "/signup" ||
+    url.pathname === "/login" ||
+    url.pathname.startsWith("/auth/callback");
+
+  if (!user && !isPublicAuthRoute) {
     return NextResponse.redirect(new URL("/signup", request.url));
   }
 
