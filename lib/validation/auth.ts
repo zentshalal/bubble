@@ -26,3 +26,8 @@ export const signUpSchema = z
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
+
+export const logInSchema = z.object({
+  email: z.string().email("Please enter a valid email").trim(),
+  password: z.string().trim().min(1, "Please enter your password"),
+});

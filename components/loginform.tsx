@@ -9,15 +9,112 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { useForm } from "react-hook-form";
+
+import { createClient } from "@/lib/supabase/client";
+import { logInSchema } from "@/lib/validation/auth";
+
+import { z } from "zod";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { toast } from "sonner";
+
+type LogInFormData = z.infer<typeof logInSchema>;
+
+const toastBaseClassName =
+  "!border-l-4 !rounded-xl !border !border-neutral-200 !bg-white !text-[#333] !font-semibold !shadow-xl";
+
+const toastErrorClassName = `${toastBaseClassName} !border-l-red-500`;
+const toastSuccessClassName = `${toastBaseClassName} !border-l-brand-primary`;
 
 export default function LogInForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, touchedFields },
+  } = useForm<LogInFormData>({
+    resolver: zodResolver(logInSchema),
+    mode: "onBlur",
+    reValidateMode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(data: LogInFormData) {
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithPassword(data);
+
+    if (error) {
+      toast.error("Log in failed", {
+        position: "top-center",
+        description: error.message,
+        className: toastErrorClassName,
+        descriptionClassName: "text-[#333]",
+      });
+      return;
+    }
+
+    toast.success("Log in Successful", {
+      position: "top-center",
+      description: "You are soon going to be redirected to the home page.",
+      className: toastSuccessClassName,
+      descriptionClassName: "!text-[#333]",
+    });
+
+    router.refresh();
+  }
+
+  async function onGoogleLogIn() {
+    setIsGoogleSubmitting(true);
+
+    const supabase = createClient();
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      toast.error("Google log in failed", {
+        position: "top-center",
+        description: error.message,
+        className: toastErrorClassName,
+        descriptionClassName: "text-[#333]",
+      });
+      setIsGoogleSubmitting(false);
+    }
+  }
+
   return (
-    <form className="w-full h-full flex gap-y-4 flex-col lg:justify-start">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full h-full flex gap-y-4 flex-col lg:justify-start"
+    >
       <div className="relative flex flex-col gap-y-2">
         <Label className="text-[#333] font-semibold text-sm">Email</Label>
+        {errors.email && (
+          <p className="lg:absolute lg:top-1 lg:right-2 lg:truncate text-xs text-red-500">
+            {touchedFields.email && errors.email?.message
+              ? String(errors.email.message)
+              : "\u00A0"}
+          </p>
+        )}
         <div className="relative">
           <Input
+            {...register("email")}
+            aria-invalid={!!errors.email}
             id="email"
             type="email"
             placeholder=" "
@@ -34,8 +131,17 @@ export default function LogInForm() {
 
       <div className="relative flex flex-col gap-y-2">
         <Label className="text-[#333] font-semibold text-sm">Password</Label>
+        {errors.password && (
+          <p className="lg:absolute lg:top-1 lg:right-2 lg:truncate text-xs text-red-500">
+            {touchedFields.password && errors.password?.message
+              ? String(errors.password.message)
+              : "\u00A0"}
+          </p>
+        )}
         <div className="relative">
           <Input
+            {...register("password")}
+            aria-invalid={!!errors.password}
             id="password"
             type={isPasswordVisible ? "text" : "password"}
             placeholder=" "
@@ -69,9 +175,10 @@ export default function LogInForm() {
 
       <Button
         type="submit"
+        disabled={isSubmitting}
         className="bg-linear-to-br border-none from-brand-secondary to-brand-primary text-lg w-full py-6 cursor-pointer rounded-full shadow-brand-secondary shadow-lg my-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Log In
+        {isSubmitting ? "Logging in..." : "Log In"}
       </Button>
 
       <div className="flex items-center gap-x-2 h-[2px] my-2">
@@ -82,6 +189,8 @@ export default function LogInForm() {
 
       <Button
         type="button"
+        disabled={isGoogleSubmitting}
+        onClick={onGoogleLogIn}
         className="border border-brand-primary text-brand-primary bg-transparent w-full p-5 rounded-full cursor-pointer mx-auto shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
       >
         <svg
@@ -109,7 +218,9 @@ export default function LogInForm() {
             fill="#EB4335"
           />
         </svg>
-        Log In With Google
+        {isGoogleSubmitting
+          ? "Redirecting to Google..."
+          : "Sign Up with Google"}
       </Button>
     </form>
   );
